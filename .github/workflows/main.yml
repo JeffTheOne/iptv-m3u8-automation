@@ -2,17 +2,18 @@ name: Convert TXT to M3U8
 
 on:
   schedule:
-    - cron: '0 * * * *' # Edit as necessary to adjust the schedule (this runs every hour)
+    - cron: '0 * * * *' # This runs every hour
   push:
-    paths:
-      - live.txt
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout repository content
+      uses: actions/checkout@v2
 
     - name: Set up Python
       uses: actions/setup-python@v2
