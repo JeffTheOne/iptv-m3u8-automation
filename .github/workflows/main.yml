@@ -29,7 +29,7 @@ jobs:
     - name: Run conversion script with debug info
       run: |
         set -x  # Enable shell debug mode
-        python your_script.py  # Make sure the script name matches your script
+        python convert_m3u.py  # Make sure the script name matches your script
         echo "### Conversion Script Output ###"
         cat live.m3u8  # Print the content of live.m3u8
         set +x  # Disable shell debug mode
