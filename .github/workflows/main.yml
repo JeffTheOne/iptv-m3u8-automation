@@ -13,25 +13,37 @@ jobs:
 
     steps:
     - name: Checkout repository content
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
+
+    - name: List directory for debugging
+      run: ls -R  # List all files in the repository for debug
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: '3.x'
 
     - name: Install dependencies
       run: pip install requests
 
-    - name: Run conversion script
-      run: python convert_m3u.py
+    - name: Run conversion script with debug info
+      run: |
+        set -x  # Enable shell debug mode
+        python your_script.py  # Make sure the script name matches your script
+        echo "### Conversion Script Output ###"
+        cat live.m3u8  # Print the content of live.m3u8
+        set +x  # Disable shell debug mode
 
-    - name: Commit and push changes
+    - name: Check for changes and commit
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add live.m3u8
-        git commit -m "Auto-updated M3U8 file"
-        git push
+        if [ -n "$(git status --porcelain)" ]; then
+          git add live.m3u8
+          git commit -m "Auto-updated M3U8 file"
+          git push
+        else
+          echo "No changes to commit"
+        fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
