@@ -24,7 +24,7 @@ jobs:
       run: pip install requests
 
     - name: Run conversion script
-      run: python convert.py
+      run: python convert_m3u.py
 
     - name: Commit and push changes
       run: |
